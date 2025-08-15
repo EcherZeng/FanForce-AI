@@ -4,15 +4,16 @@
 import { Pool } from 'pg';
 import { DatabaseConfig } from '@/types';
 import { logger } from './logger';
+import { databaseEnv } from './environment';
 
-// Database configuration from environment variables
-// 从环境变量获取数据库配置
+// Database configuration from validated environment variables
+// 从验证过的环境变量获取数据库配置
 export const databaseConfig: DatabaseConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME || 'fanforce_ai',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || '654210',
+  host: databaseEnv.host,
+  port: databaseEnv.port,
+  database: databaseEnv.name,
+  user: databaseEnv.user,
+  password: databaseEnv.password,
   max: 10, // Maximum number of connections in the pool / 连接池中的最大连接数
   idleTimeoutMillis: 30000, // How long a client is allowed to remain idle / 客户端允许保持空闲的时间
   connectionTimeoutMillis: 5000, // How long to wait for a connection / 等待连接的时间
@@ -28,11 +29,9 @@ export const testDatabaseConnection = async (): Promise<void> => {
   try {
     const result = await pool.query('SELECT NOW() as current_time');
     logger.info('Database connected successfully');
-    logger.info('数据库连接成功');
     logger.info(`Current time: ${result.rows[0].current_time}`);
   } catch (error) {
     logger.error('Database connection failed:', error);
-    logger.error('数据库连接失败:', error);
     throw error;
   }
 };

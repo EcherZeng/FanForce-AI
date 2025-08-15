@@ -77,14 +77,6 @@ export const logger = winston.createLogger({
   ]
 });
 
-// If we're not in production, log to the console with a simple format
-// 如果不在生产环境中，则以简单格式记录到控制台
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
-}
-
 // Create a stream object for Morgan HTTP request logging
 // 为Morgan HTTP请求日志记录创建流对象
 export const loggerStream = {

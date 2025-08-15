@@ -14,6 +14,7 @@ import { Server as SocketIOServer } from 'socket.io';
 // 导入配置
 import { serverConfig, validateConfig, isDevelopment } from '@/config/server';
 import { testDatabaseConnection, closeDatabaseConnection } from '@/config/database';
+import { getEnvironmentInfo } from '@/config/environment';
 import { logger, loggerStream } from '@/config/logger';
 import passport from '@/config/passport';
 

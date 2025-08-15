@@ -15,6 +15,7 @@ import {
   BindWalletRequest,
   ApiResponse
 } from '@/types';
+import {AuthType} from '@/constants/commonConstants';
 
 // Google OAuth callback handler
 // Google OAuth回调处理器
@@ -27,7 +28,7 @@ export const googleCallback = async (req: Request, res: Response): Promise<void>
       userId: user.id,
       googleId: user.google_id,
       role: user.role,
-      authType: 'google'
+      authType: AuthType.GOOGLE
     });
 
     // Redirect to frontend with token / 重定向到前端并携带token
@@ -51,7 +52,7 @@ export const twitterCallback = async (req: Request, res: Response): Promise<void
       userId: user.id,
       twitterId: user.twitter_id,
       role: user.role,
-      authType: 'twitter'
+      authType: AuthType.TWITTER
     });
 
     // Redirect to frontend with token / 重定向到前端并携带token
@@ -112,7 +113,7 @@ export const icpLogin = async (req: Request, res: Response): Promise<void> => {
       userId: userResult.rows[0].id,
       principalId: userResult.rows[0].icp_principal_id,
       role: userResult.rows[0].role,
-      authType: 'icp'
+      authType: AuthType.ICP,
     });
 
     logger.info('✅ ICP身份登录成功 / ICP Identity login successful:', userResult.rows[0].id);
@@ -268,7 +269,7 @@ export const walletLogin = async (req: Request, res: Response): Promise<void> =>
       userId: userResult.rows[0].id,
       walletAddress: userResult.rows[0].wallet_address,
       role: userResult.rows[0].role,
-      authType: 'wallet'
+      authType: AuthType.WALLET
     });
 
     res.json({
